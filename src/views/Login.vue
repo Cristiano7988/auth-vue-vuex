@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <form @submit.prevent="enviarFormulario">
+        <form @submit.prevent="efetuarLogin">
             <h1>Login</h1>
             <div class="form-group">
                 <label for="e-mail">E-mail</label>
@@ -21,10 +21,22 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data () {
         return {
             usuario: {}
+        }
+    },
+    methods: {
+        efetuarLogin () {
+            axios.post('http://localhost:8000/auth/login', this.usuario)
+                .then(r => {
+                    localStorage.setItem('token', r.data.access_token)
+                    this.$router.push({name: 'gerentes'})
+                })
+                .catch(e => console.log(e))
         }
     }
 }

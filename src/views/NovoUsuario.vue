@@ -35,7 +35,7 @@ export default {
     methods: {
         enviarFormulario () {
             axios.post('http://localhost:8000/auth/register', this.usuario)
-                .then(r => r)
+                .then(() => this.$router.push({name: 'login'}) )
                 .catch(e=> console.log(e))
         }
     }
